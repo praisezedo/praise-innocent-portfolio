@@ -1,7 +1,13 @@
+import Footer from "./components/Footer";
+import Navbar from "./components/NavBar";
+import Hero from "./sections/Hero";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#050816] text-white">
-      <h1 className="text-4xl font-bold">Praise Innocent Portfolio</h1>
+      <Navbar/>
+      <Hero />
+      <Footer/>
     </main>
   );
 }
