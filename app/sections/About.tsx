@@ -1,10 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import StarsBackground from "../components/StarsBackground";
+import PraisePhoto from "@/public/images/Praise-Photo.jpeg";
+
+const StarsBackground = dynamic(() => import("../components/StarsBackground"), {
+  ssr: false,
+});
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -50,9 +55,10 @@ export default function About() {
         <div className="grid items-center gap-12 rounded-[2.5rem] bg-[#050816]/90 p-6 backdrop-blur-md lg:grid-cols-[0.9fr_1.1fr] lg:p-12 xl:gap-20">
           <div className="about-image relative mx-auto h-80 w-[320px] overflow-hidden rounded-full border border-cyan-400/20 bg-slate-900/50 shadow-2xl shadow-cyan-500/10 sm:h-95 sm:w-95 lg:ml-12 lg:h-105 lg:w-105">
             <Image
-              src="/images/praise-photo.jpeg"
+              src={PraisePhoto}
               alt="Praise Innocent"
               fill
+              sizes="(max-width: 767px) 320px, 420px"
               className="object-cover"
             />
           </div>

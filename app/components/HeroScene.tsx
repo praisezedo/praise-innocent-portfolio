@@ -22,10 +22,14 @@ function FloatingSphere() {
 
 export default function HeroScene() {
     return (
-        <Canvas camera={{position: [0,0,5], fov: 45}}>
+        <Canvas
+            camera={{position: [0,0,5], fov: 45}}
+            dpr={[1, 1.5]}
+            performance={{ min: 0.5 }}
+        >
              <ambientLight intensity={0.6}/>
              <pointLight position={[4,4,4]} intensity={1.5}/>
-             <Stars radius={80} depth={40} count={1200} factor={4} fade speed={1}/>
+             <Stars radius={80} depth={40} count={700} factor={4} fade speed={0.4}/>
              <FloatingSphere/>
         </Canvas>
     )

@@ -1,10 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import HeroScene from "../components/HeroScene";
 import PraiseAvatar from "@/public/images/Praise - avatar.jpeg";
+
+const HeroScene = dynamic(() => import("../components/HeroScene"), {
+  ssr: false,
+});
 
 export default function Hero() {
   useGSAP(() => {
@@ -126,6 +130,7 @@ export default function Hero() {
               alt="Avatar illustration of Praise Innocent"
               fill
               priority
+              sizes="(max-width: 767px) 320px, 420px"
               className="object-cover"
             />
           </div>

@@ -29,7 +29,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden"
+          className="md:hidden hover:cursor-pointer"
           aria-label="Toggle menu"
         >
           {open ? <X /> : <Menu />}
