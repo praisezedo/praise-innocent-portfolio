@@ -23,6 +23,25 @@ export default function Hero() {
       delay: 0.4,
       ease: "power3.out",
     });
+
+    gsap.utils.toArray<HTMLElement>(".stat-number").forEach((stat) => {
+  const target = Number(stat.dataset.value);
+
+  gsap.fromTo(
+    stat,
+    { innerText: 0 },
+    {
+      innerText: target,
+      duration: 1.5,
+      delay: 0.8,
+      snap: { innerText: 1 },
+      ease: "power2.out",
+      onUpdate: function () {
+        stat.innerText = `${Math.floor(Number(stat.innerText))}+`;
+      },
+    }
+  );
+});
   }, []);
 
   return (
@@ -36,7 +55,7 @@ export default function Hero() {
       <div className="relative z-10 grid min-h-[calc(100vh-7rem)] items-center gap-12 lg:grid-cols-2">
         <div>
           <p className="hero-text mb-4 text-cyan-400">Hello, I&apos;m</p>
-
+        
           <h1 className="hero-text text-5xl font-bold tracking-tight md:text-7xl">
             Praise Innocent
           </h1>
@@ -74,6 +93,30 @@ export default function Hero() {
               Download CV
             </a>
           </div>
+<div className="hero-text mt-12 flex flex-wrap gap-8">
+  <div>
+    <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="10">
+      0+
+    </h3>
+    <p className="mt-1 text-sm text-slate-400">Projects Built</p>
+  </div>
+
+  <div>
+    <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="8">
+      0+
+    </h3>
+    <p className="mt-1 text-sm text-slate-400">Technologies</p>
+  </div>
+
+  <div>
+    <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="1">
+      0+
+    </h3>
+    <p className="mt-1 text-sm text-slate-400">
+      Years Learning & Building
+    </p>
+  </div>
+</div>
         </div>
 
         <div className="hero-avatar flex justify-center lg:justify-end">
