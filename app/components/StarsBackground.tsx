@@ -10,7 +10,7 @@ export default function StarsBackground() {
       dpr={[1, 1.5]}
       performance={{ min: 0.5 }}
     >
-      <Stars radius={80} depth={40} count={1500} factor={4} fade speed={0.35} />
+      <Stars radius={80} depth={40} count={1500} factor={4}  speed={0.35} />
     </Canvas>
   );
 }

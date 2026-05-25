@@ -57,7 +57,7 @@ export default function Projects() {
               className="project-card overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/3 backdrop-blur-md transition hover:border-cyan-400/40 sm:rounded-4xl"
             >
               <div className="px-4 pt-4 sm:p-0">
-                <div className="relative mx-auto aspect-[16/10] w-full max-w-80 overflow-hidden rounded-3xl sm:h-65 sm:max-w-none sm:rounded-none">
+                <div className="relative mx-auto aspect-16/10 w-full max-w-80 overflow-hidden rounded-3xl sm:h-65 sm:max-w-none sm:rounded-none">
                   <Image
                     src={project.image}
                     alt={project.title}
