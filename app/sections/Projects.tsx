@@ -1,33 +1,75 @@
 "use client";
 
 import Image from "next/image";
-
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
 
 import { projects } from "../constants/projects";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Projects() {
-  useGSAP(() => {
-    gsap.from(".project-card", {
-      opacity: 0,
-      y: 60,
-      duration: 1,
-      stagger: 0.15,
-      ease: "power3.out",
+  const sectionRef = useRef<HTMLElement>(null);
 
-      scrollTrigger: {
-        trigger: "#projects",
-        start: "top 75%",
+  useGSAP(() => {
+    const section = sectionRef.current;
+
+    if (!section) {
+      return;
+    }
+
+    const cards = Array.from(
+      section.querySelectorAll<HTMLElement>(".project-card")
+    );
+
+    if (!cards.length) {
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set(cards, { autoAlpha: 1, y: 0 });
+      return;
+    }
+
+    const grid = section.querySelector(".projects-grid") ?? section;
+
+    const reveal = gsap.fromTo(
+      cards,
+      {
+        autoAlpha: 0,
+        y: 48,
       },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power3.out",
+        clearProps: "opacity,visibility,transform",
+        scrollTrigger: {
+          trigger: grid,
+          start: "top 82%",
+          once: true,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
+
+    const refreshId = window.requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
     });
-  }, []);
+
+    return () => {
+      window.cancelAnimationFrame(refreshId);
+      reveal.kill();
+    };
+  }, { scope: sectionRef });
 
   return (
     <section
+      ref={sectionRef}
       id="projects"
       className="relative overflow-hidden px-4 py-24 sm:px-6 md:px-16 md:py-28 lg:px-24"
     >
@@ -50,11 +92,11 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-8 sm:mt-16 lg:grid-cols-2">
+        <div className="projects-grid mt-12 grid gap-8 sm:mt-16 lg:grid-cols-2">
           {projects.map((project) => (
             <article
               key={project.title}
-              className="project-card overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/3 backdrop-blur-md transition hover:border-cyan-400/40 sm:rounded-4xl"
+              className="project-card overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/3 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-cyan-400/40 sm:rounded-4xl"
             >
               <div className="px-4 pt-4 sm:p-0">
                 <div className="relative mx-auto aspect-16/10 w-full max-w-80 overflow-hidden rounded-3xl sm:h-65 sm:max-w-none sm:rounded-none">
@@ -63,6 +105,7 @@ export default function Projects() {
                     alt={project.title}
                     fill
                     sizes="(max-width: 639px) calc(100vw - 4rem), (max-width: 1023px) 100vw, 50vw"
+                    quality={78}
                     className="object-cover transition duration-500 hover:scale-105"
                   />
                 </div>
@@ -104,7 +147,8 @@ export default function Projects() {
                     href={project.live}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 sm:px-6"
+                    aria-label={`Open ${project.title} live demo`}
+                    className="rounded-full bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:ring-offset-2 focus:ring-offset-[#050816] sm:px-6"
                   >
                     Live Demo
                   </a>
@@ -113,7 +157,8 @@ export default function Projects() {
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-white/10 px-5 py-3 font-semibold text-white transition hover:border-cyan-400 hover:text-cyan-400 sm:px-6"
+                    aria-label={`Open ${project.title} GitHub repository`}
+                    className="rounded-full border border-white/10 px-5 py-3 font-semibold text-white transition hover:border-cyan-400 hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-[#050816] sm:px-6"
                   >
                     GitHub
                   </a>

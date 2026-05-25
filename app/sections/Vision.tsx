@@ -45,7 +45,7 @@ export default function Vision() {
         <StarsBackground />
       </div>
 
-      <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
+      <div className="absolute left-1/2 top-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
 
       <div className="vision-content relative z-10 mx-auto max-w-5xl text-center">
         <p className="mb-4 text-sm uppercase tracking-[0.3em] text-cyan-400">
@@ -75,7 +75,7 @@ export default function Vision() {
       </div>
 
       <div className="vision-grid relative z-10 mx-auto mt-20 grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="vision-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md">
+        <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
           <h3 className="text-2xl font-bold text-white">
             Human-Centered Software
           </h3>
@@ -86,7 +86,7 @@ export default function Vision() {
           </p>
         </div>
 
-        <div className="vision-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md">
+        <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
           <h3 className="text-2xl font-bold text-white">
             Intelligent Interfaces
           </h3>
@@ -97,7 +97,7 @@ export default function Vision() {
           </p>
         </div>
 
-        <div className="vision-card rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md">
+        <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
           <h3 className="text-2xl font-bold text-white">
             Immersive Web Experiences
           </h3>
