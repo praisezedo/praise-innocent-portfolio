@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import PraiseAvatar from "@/public/images/Praise - avatar.jpeg";
 import { Download } from "lucide-react";
+
 const HeroScene = dynamic(() => import("../components/HeroScene"), {
   ssr: false,
 });
@@ -76,7 +77,7 @@ export default function Hero() {
 
           <div className="hero-text mt-8 flex flex-wrap gap-4">
             <a
-              href="#projects"
+              href="#projects" 
               className="rounded-full bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"
             >
               View Projects
@@ -90,8 +91,8 @@ export default function Hero() {
             </a>
 
             <a
-              href="/resume/praise-innocent-cv.pdf"
-              download
+              href="/resume/praise-resume.pdf"
+              download="Praise-Innocent-CV.pdf"
               className="rounded-full border border-cyan-400 px-6 py-3 font-semibold text-cyan-400 transition hover:bg-cyan-400 hover:text-slate-950"
             >
             <Download className="inline-block h-4 w-4 mr-1" />
