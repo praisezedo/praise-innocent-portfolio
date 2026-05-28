@@ -4,12 +4,15 @@ import { useState } from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import {
   FaGithub,
   FaLinkedin,
   FaXTwitter,
 } from "react-icons/fa6";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
   const [loading, setLoading] = useState(false);

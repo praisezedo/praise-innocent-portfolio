@@ -89,7 +89,6 @@ export default function Hero() {
             >
               Contact Me
             </a>
-
             <a
               href="/resume/praise-resume.pdf"
               download="Praise-Innocent-CV.pdf"

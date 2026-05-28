@@ -53,7 +53,10 @@ export default function Skills() {
         animateConfidence();
         observer.disconnect();
       },
-      { threshold: 0.25 }
+      {
+        rootMargin: "0px 0px -20% 0px",
+        threshold: 0.05,
+      }
     );
 
     observer.observe(section);
