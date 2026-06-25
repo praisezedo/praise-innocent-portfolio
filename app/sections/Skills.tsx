@@ -1,8 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StarsBackground from "../components/StarsBackground";
 import { skills } from "../constants/skills";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -10,62 +15,71 @@ export default function Skills() {
   const [confidenceLevels, setConfidenceLevels] = useState(() =>
     skills.map(() => 0)
   );
-  const [cardsEntered, setCardsEntered] = useState(false);
 
-  useEffect(() => {
+  useGSAP(() => {
     const section = sectionRef.current;
 
     if (!section) {
       return;
     }
 
-    let animationFrame = 0;
-    let started = false;
-
-    const animateConfidence = () => {
-      const duration = 900;
-      const startedAt = performance.now();
-
-      const tick = (now: number) => {
-        const progress = Math.min((now - startedAt) / duration, 1);
-        const easedProgress = 1 - Math.pow(1 - progress, 3);
-
-        setConfidenceLevels(
-          targetLevels.map((level) => Math.round(level * easedProgress))
-        );
-
-        if (progress < 1) {
-          animationFrame = requestAnimationFrame(tick);
-        }
-      };
-
-      animationFrame = requestAnimationFrame(tick);
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || started) {
-          return;
-        }
-
-        started = true;
-        setCardsEntered(true);
-        animateConfidence();
-        observer.disconnect();
-      },
-      {
-        rootMargin: "0px 0px -20% 0px",
-        threshold: 0.05,
-      }
+    const cards = Array.from(
+      section.querySelectorAll<HTMLElement>(".skill-card")
     );
 
-    observer.observe(section);
+    const mm = gsap.matchMedia();
 
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(animationFrame);
-    };
-  }, [targetLevels]);
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(cards, { autoAlpha: 1, y: 0 });
+      setConfidenceLevels(targetLevels);
+    });
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const confidenceProgress = { value: 0 };
+      const confidenceTween = gsap.fromTo(
+        confidenceProgress,
+        { value: 0 },
+        {
+          value: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          paused: true,
+          onUpdate: () => {
+            setConfidenceLevels(
+              targetLevels.map((level) => Math.round(level * confidenceProgress.value))
+            );
+          },
+          onComplete: () => {
+            setConfidenceLevels(targetLevels);
+          },
+        }
+      );
+
+      gsap.set(cards, { autoAlpha: 0, y: 56 });
+
+      const reveal = gsap.to(cards, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.85,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 78%",
+          toggleActions: "play none none none",
+          once: true,
+          onEnter: () => confidenceTween.play(0),
+        },
+      });
+
+      return () => {
+        confidenceTween.kill();
+        reveal.kill();
+      };
+    });
+
+    return () => mm.revert();
+  }, { scope: sectionRef, dependencies: [targetLevels] });
 
   return (
     <section
@@ -73,7 +87,7 @@ export default function Skills() {
       id="skills"
       className="relative overflow-hidden px-6 py-28 md:px-16 lg:px-24"
     >
-   <div className="absolute inset-0 opacity-25">
+      <div className="absolute inset-0 opacity-25">
         <StarsBackground />
       </div>
       <div className="absolute left-0 top-20 h-75 w-75 rounded-full bg-cyan-500/10 blur-[120px]" />
@@ -102,12 +116,7 @@ export default function Skills() {
             return (
               <article
                 key={skill.name}
-                className={`flex h-full flex-col rounded-4xl border border-white/10 bg-white/3 p-6 opacity-100 backdrop-blur-md transition hover:-translate-y-1 hover:border-cyan-400/40 hover:bg-cyan-400/5 ${
-                  cardsEntered
-                    ? "motion-safe:animate-[skill-card-enter_600ms_ease-out_both]"
-                    : ""
-                }`}
-                style={{ animationDelay: `${index * 70}ms` }}
+                className="skill-card flex h-full flex-col rounded-4xl border border-white/10 bg-white/3 p-6 opacity-100 backdrop-blur-md transition hover:-translate-y-1 hover:border-cyan-400/40 hover:bg-cyan-400/5"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
@@ -142,7 +151,7 @@ export default function Skills() {
 
                   <div className="h-2 overflow-hidden rounded-full bg-slate-800">
                     <div
-                      className="h-full rounded-full bg-cyan-400 transition-[width] duration-700 ease-out"
+                      className="h-full rounded-full bg-cyan-400"
                       style={{ width: `${confidenceLevel}%` }}
                     />
                   </div>

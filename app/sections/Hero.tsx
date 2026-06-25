@@ -13,40 +13,56 @@ const HeroScene = dynamic(() => import("../components/HeroScene"), {
 
 export default function Hero() {
   useGSAP(() => {
-    gsap.from(".hero-text", {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: "power3.out",
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(".hero-text, .hero-avatar", { autoAlpha: 1, y: 0 });
+      gsap.utils.toArray<HTMLElement>(".stat-number").forEach((stat) => {
+        const target = Number(stat.dataset.value);
+        stat.innerText = `${target}+`;
+      });
     });
 
-    gsap.from(".hero-avatar", {
-      scale: 0.9,
-      opacity: 0,
-      duration: 1,
-      delay: 0.4,
-      ease: "power3.out",
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(".hero-text, .hero-avatar", { autoAlpha: 0, y: 56 });
+
+      gsap.to(".hero-text", {
+        y: 0,
+        autoAlpha: 1,
+        duration: 1,
+        stagger: 0.12,
+        ease: "power3.out",
+      });
+
+      gsap.to(".hero-avatar", {
+        y: 0,
+        autoAlpha: 1,
+        duration: 1,
+        delay: 0.25,
+        ease: "power3.out",
+      });
+
+      gsap.utils.toArray<HTMLElement>(".stat-number").forEach((stat) => {
+        const target = Number(stat.dataset.value);
+
+        gsap.fromTo(
+          stat,
+          { innerText: 0 },
+          {
+            innerText: target,
+            duration: 1.5,
+            delay: 0.8,
+            snap: { innerText: 1 },
+            ease: "power2.out",
+            onUpdate: function () {
+              stat.innerText = `${Math.floor(Number(stat.innerText))}+`;
+            },
+          }
+        );
+      });
     });
 
-    gsap.utils.toArray<HTMLElement>(".stat-number").forEach((stat) => {
-  const target = Number(stat.dataset.value);
-
-  gsap.fromTo(
-    stat,
-    { innerText: 0 },
-    {
-      innerText: target,
-      duration: 1.5,
-      delay: 0.8,
-      snap: { innerText: 1 },
-      ease: "power2.out",
-      onUpdate: function () {
-        stat.innerText = `${Math.floor(Number(stat.innerText))}+`;
-      },
-    }
-  );
-});
+    return () => mm.revert();
   }, []);
 
   return (
@@ -58,9 +74,9 @@ export default function Hero() {
       <div className="absolute left-1/2 top-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-[120px]" />
 
       <div className="relative z-10 grid min-h-[calc(100vh-7rem)] items-center gap-12 lg:grid-cols-2">
-        <div>
+        <div className="order-2 lg:order-1">
           <p className="hero-text mb-4 text-cyan-400">Hello, I&apos;m</p>
-        
+
           <h1 className="hero-text text-5xl font-bold tracking-tight md:text-7xl">
             Praise Innocent
           </h1>
@@ -77,7 +93,7 @@ export default function Hero() {
 
           <div className="hero-text mt-8 flex flex-wrap gap-4">
             <a
-              href="#projects" 
+              href="#projects"
               className="rounded-full bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"
             >
               View Projects
@@ -89,42 +105,44 @@ export default function Hero() {
             >
               Contact Me
             </a>
+
             <a
               href="/resume/praise-resume.pdf"
               download="Praise-Innocent-CV.pdf"
               className="rounded-full border border-cyan-400 px-6 py-3 font-semibold text-cyan-400 transition hover:bg-cyan-400 hover:text-slate-950"
             >
-            <Download className="inline-block h-4 w-4 mr-1" />
+              <Download className="mr-1 inline-block h-4 w-4" />
               Download CV
             </a>
           </div>
-<div className="hero-text mt-12 flex flex-wrap gap-8">
-  <div>
-    <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="10">
-      0+
-    </h3>
-    <p className="mt-1 text-sm text-slate-400">Projects Built</p>
-  </div>
 
-  <div>
-    <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="8">
-      0+
-    </h3>
-    <p className="mt-1 text-sm text-slate-400">Technologies</p>
-  </div>
+          <div className="hero-text mt-12 flex flex-wrap gap-8">
+            <div>
+              <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="10">
+                0+
+              </h3>
+              <p className="mt-1 text-sm text-slate-400">Projects Built</p>
+            </div>
 
-  <div>
-    <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="1">
-      0+
-    </h3>
-    <p className="mt-1 text-sm text-slate-400">
-      Years Learning & Building
-    </p>
-  </div>
-</div>
+            <div>
+              <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="8">
+                0+
+              </h3>
+              <p className="mt-1 text-sm text-slate-400">Technologies</p>
+            </div>
+
+            <div>
+              <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="1">
+                0+
+              </h3>
+              <p className="mt-1 text-sm text-slate-400">
+                Years Learning & Building
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="hero-avatar flex justify-center lg:justify-end">
+        <div className="hero-avatar order-1 flex justify-center lg:order-2 lg:justify-end">
           <div className="relative h-80 w-[320px] overflow-hidden rounded-4xl border border-cyan-400/30 bg-slate-900/60 shadow-2xl shadow-cyan-500/20 md:h-105 md:w-105">
             <Image
               src={PraiseAvatar}

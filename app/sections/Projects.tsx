@@ -28,42 +28,41 @@ export default function Projects() {
       return;
     }
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(cards, { autoAlpha: 1, y: 0 });
-      return;
-    }
-
+    const mm = gsap.matchMedia();
     const grid = section.querySelector(".projects-grid") ?? section;
 
-    const reveal = gsap.fromTo(
-      cards,
-      {
-        autoAlpha: 0,
-        y: 48,
-      },
-      {
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(cards, { autoAlpha: 1, y: 0 });
+    });
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(cards, { autoAlpha: 0, y: 48 });
+
+      const reveal = gsap.to(cards, {
         autoAlpha: 1,
         y: 0,
         duration: 0.8,
         stagger: 0.12,
         ease: "power3.out",
-        clearProps: "opacity,visibility,transform",
         scrollTrigger: {
           trigger: grid,
           start: "top 82%",
+          toggleActions: "play none none none",
           once: true,
           invalidateOnRefresh: true,
         },
-      }
-    );
+      });
 
-    const refreshId = window.requestAnimationFrame(() => {
+      return () => reveal.kill();
+    });
+
+    const refresh = gsap.delayedCall(0, () => {
       ScrollTrigger.refresh();
     });
 
     return () => {
-      window.cancelAnimationFrame(refreshId);
-      reveal.kill();
+      refresh.kill();
+      mm.revert();
     };
   }, { scope: sectionRef });
 

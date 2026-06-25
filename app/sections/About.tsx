@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,35 +14,69 @@ const StarsBackground = dynamic(() => import("../components/StarsBackground"), {
 
 gsap.registerPlugin(ScrollTrigger);
 
-
 export default function About() {
+  const sectionRef = useRef<HTMLElement>(null);
+
   useGSAP(() => {
-    gsap.from(".about-card", {
-      opacity: 0,
-      y: 60,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: ".about-card",
+    const section = sectionRef.current;
+
+    if (!section) {
+      return;
+    }
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(".about-card, .about-image", { autoAlpha: 1, y: 0 });
     });
 
-    gsap.from(".about-image", {
-      opacity: 0,
-      scale: 0.9,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: ".about-image",
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(".about-card, .about-image", { autoAlpha: 0, y: 56 });
+
+      gsap.to(".about-image", {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".about-image",
+          start: "top 82%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
+
+      gsap.to(".about-card", {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".about-card",
+          start: "top 82%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
     });
 
-    gsap.to(".glow-border", {
-      backgroundPosition: "200% center",
-      duration: 4,
-      repeat: -1,
-      ease: "linear",
-    });
-  }, []);
+    gsap.fromTo(
+      ".glow-border",
+      { backgroundPosition: "0% center" },
+      {
+        backgroundPosition: "200% center",
+        duration: 4,
+        repeat: -1,
+        ease: "linear",
+      }
+    );
+
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   return (
     <section
+      ref={sectionRef}
       id="about"
       className="relative overflow-hidden px-4 py-24 sm:px-6 md:px-16 md:py-28 lg:px-24"
     >
@@ -74,7 +109,7 @@ export default function About() {
             </h2>
 
             <p className="mt-6 text-base leading-7 text-slate-400 sm:mt-8 sm:leading-8">
-              My journey into technology started from curiosity — wanting to
+              My journey into technology started from curiosity - wanting to
               understand how websites, applications, and digital systems
               actually work behind the scenes. Over time, that curiosity became
               a strong passion for software engineering, frontend development,
@@ -93,7 +128,6 @@ export default function About() {
               deeply, and building projects that combine creativity, software,
               and innovation.
             </p>
-
           </div>
         </div>
       </div>

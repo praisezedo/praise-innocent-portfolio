@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -10,11 +10,13 @@ import {
   FaGithub,
   FaLinkedin,
   FaXTwitter,
+  FaWhatsapp,
 } from "react-icons/fa6";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
@@ -25,20 +27,34 @@ export default function Contact() {
 
   type TextColor = "text-red-600" | "text-green-600";
   const [status, setStatus] = useState("");
-  const [textColor , setTextColor] = useState("text-green-600" as TextColor);
-  
+  const [textColor, setTextColor] = useState("text-green-600" as TextColor);
+
   useGSAP(() => {
-    gsap.from(".contact-card", {
-      opacity: 0,
-      y: 60,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#contact",
-        start: "top 75%",
-      },
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(".contact-card", { autoAlpha: 1, y: 0 });
     });
-  }, []);
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(".contact-card", { autoAlpha: 0, y: 56 });
+
+      gsap.to(".contact-card", {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#contact",
+          start: "top 78%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
+    });
+
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
@@ -82,6 +98,7 @@ export default function Contact() {
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="relative overflow-hidden px-6 py-28 md:px-16 lg:px-24"
     >
@@ -94,7 +111,7 @@ export default function Contact() {
               Contact
             </p>
 
-            <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
+            <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl" suppressHydrationWarning={true}>
               Let&apos;s build something meaningful together.
             </h2>
 
@@ -116,7 +133,7 @@ export default function Contact() {
               </a>
 
               <a
-                href="https://www.linkedin.com/in/praise-innocent-bb3949353?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                href="https://www.linkedin.com/in/praise-innocent-bb3949353/"
                 target="_blank"
                 rel="noreferrer"
                 className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl text-white transition hover:border-cyan-400 hover:text-cyan-400"
@@ -131,6 +148,15 @@ export default function Contact() {
                 className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl text-white transition hover:border-cyan-400 hover:text-cyan-400"
               >
                 <FaXTwitter />
+              </a>
+
+              <a
+                href="https://wa.me/2347050243807"
+                target="_blank"
+                rel="noreferrer"
+                className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl text-white transition hover:border-cyan-400 hover:text-cyan-400"
+              >
+                <FaWhatsapp />
               </a>
             </div>
           </div>

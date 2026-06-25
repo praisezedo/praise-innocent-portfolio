@@ -3,41 +3,59 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
 
 import StarsBackground from "../components/StarsBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Vision() {
+  const sectionRef = useRef<HTMLElement>(null);
+
   useGSAP(() => {
-    gsap.from(".vision-content", {
-      opacity: 0,
-      y: 60,
-      duration: 1,
-      ease: "power3.out",
+    const mm = gsap.matchMedia();
 
-      scrollTrigger: {
-        trigger: "#vision",
-        start: "top 75%",
-      },
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      gsap.set(".vision-content, .vision-card", { autoAlpha: 1, y: 0 });
     });
 
-    gsap.from(".vision-card", {
-      opacity: 0,
-      y: 40,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: "power3.out",
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.set(".vision-content, .vision-card", { autoAlpha: 0, y: 56 });
 
-      scrollTrigger: {
-        trigger: ".vision-grid",
-        start: "top 80%",
-      },
+      gsap.to(".vision-content", {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#vision",
+          start: "top 78%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
+
+      gsap.to(".vision-card", {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".vision-grid",
+          start: "top 82%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
     });
-  }, []);
+
+    return () => mm.revert();
+  }, { scope: sectionRef });
 
   return (
     <section
+      ref={sectionRef}
       id="vision"
       className="relative overflow-hidden px-6 py-28 md:px-16 lg:px-24"
     >
