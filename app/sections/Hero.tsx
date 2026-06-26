@@ -116,7 +116,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="/resume/praise-innocent-resume.pdf"
+               href="/resume/praise-innocent-resume.pdf"
               download="Praise-Innocent-CV.pdf"
               className="rounded-full border border-cyan-400 px-6 py-3 font-semibold text-cyan-400 transition hover:bg-cyan-400 hover:text-slate-950"
             >
