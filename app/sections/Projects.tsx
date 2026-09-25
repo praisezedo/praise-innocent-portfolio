@@ -80,7 +80,7 @@ export default function Projects() {
             Projects
           </p>
 
-          <h2 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
+          <h2 className="text-xl font-bold leading-tight sm:text-4xl md:text-5xl">
             Some things I&apos;ve been building.
           </h2>
 

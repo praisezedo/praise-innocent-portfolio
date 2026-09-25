@@ -70,7 +70,7 @@ export default function Vision() {
           Vision
         </p>
 
-        <h2 className="text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
+        <h2 className="text-2xl font-bold leading-tight sm:text-2xl md:text-6xl">
           I believe the future of software will feel more intelligent, immersive,
           and human-centered.
         </h2>
@@ -92,9 +92,9 @@ export default function Vision() {
         </p>
       </div>
 
-      <div className="vision-grid relative z-10 mx-auto mt-20 grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="vision-grid relative z-10 mx-auto mt-20 grid sm:grid-cols-2 max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
-          <h3 className="text-2xl font-bold text-white">
+          <h3 className="text-xl md:text-2xl font-bold text-white">
             Human-Centered Software
           </h3>
 
@@ -105,7 +105,7 @@ export default function Vision() {
         </div>
 
         <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
-          <h3 className="text-2xl font-bold text-white">
+          <h3 className="text-xl md:text-2xl font-bold text-white">
             Intelligent Interfaces
           </h3>
 
@@ -116,7 +116,7 @@ export default function Vision() {
         </div>
 
         <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
-          <h3 className="text-2xl font-bold text-white">
+          <h3 className="text-xl md:text-2xl font-bold text-white">
             Immersive Web Experiences
           </h3>
 

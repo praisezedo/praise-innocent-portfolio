@@ -111,7 +111,7 @@ export default function Contact() {
               Contact
             </p>
 
-            <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl" suppressHydrationWarning={true}>
+            <h2 className=" text-xl font-bold sm:text-4xl md:text-5xl" suppressHydrationWarning={true}>
               Let&apos;s build something meaningful together.
             </h2>
 

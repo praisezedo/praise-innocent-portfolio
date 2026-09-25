@@ -77,7 +77,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden px-6 pt-28 md:px-16 lg:px-24">
       <div className="absolute inset-0 opacity-40">
-        <HeroScene />s
+        <HeroScene />
       </div>
 
       <div className="absolute left-1/2 top-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/20 blur-[120px]" />
@@ -86,11 +86,11 @@ export default function Hero() {
         <div className="order-2 lg:order-1">
           <p className="hero-text mb-4 text-cyan-400" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>Hello, I&apos;m</p>
 
-          <h1 className="hero-text text-5xl font-bold tracking-tight md:text-7xl" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
+          <h1 className="hero-text sm:text-4xl text-3xl font-bold tracking-tight md:text-7xl" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
             Praise Innocent
           </h1>
 
-          <h2 className="hero-text mt-4 text-2xl font-semibold text-slate-300 md:text-4xl" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
+          <h2 className="hero-text mt-4 text-lg font-semibold text-slate-300 md:text-4xl" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
             Frontend Developer & AI Enthusiast
           </h2>
 
@@ -100,17 +100,17 @@ export default function Hero() {
             with artificial intelligence to solve real problems.
           </p>
 
-          <div className="hero-text mt-8 flex flex-wrap gap-4" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
+          <div className="hero-text mt-8 flex gap-2   sm:gap-4" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
             <a
               href="#projects"
-              className="rounded-full bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"
+              className=" bg-cyan-400 button-strucuture text-slate-950 transition hover:bg-cyan-300"
             >
               View Projects
             </a>
 
             <a
               href="#contact"
-              className="rounded-full border border-slate-600 px-6 py-3 font-semibold text-white transition hover:border-cyan-400 hover:text-cyan-400"
+              className="button-strucuture  border border-slate-600  text-white transition hover:border-cyan-400 hover:text-cyan-400"
             >
               Contact Me
             </a>
@@ -118,33 +118,33 @@ export default function Hero() {
             <a
                href="/resume/Praise-Innocent-resume.pdf"
               download="Praise-Innocent-CV.pdf"
-              className="rounded-full border border-cyan-400 px-6 py-3 font-semibold text-cyan-400 transition hover:bg-cyan-400 hover:text-slate-950"
+              className="button-strucuture flex gap-1 border border-cyan-400 text-cyan-400 transition hover:bg-cyan-400 hover:text-slate-950"
             >
               <Download className="mr-1 inline-block h-4 w-4" />
               Download CV
             </a>
           </div>
 
-          <div className="hero-text mt-12 flex flex-wrap gap-8" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
+          <div className="hero-text mt-12 flex gap-4 md:gap-8" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
             <div>
-              <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="10">
+              <h3 className="stat-number text-2xl  md:text-3xl font-bold text-cyan-400" data-value="10">
                 0+
               </h3>
-              <p className="mt-1 text-sm text-slate-400">Projects Built</p>
+              <p className="mt-1 text-xs md:text-sm text-slate-400">Projects Built</p>
             </div>
 
             <div>
-              <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="8">
+              <h3 className="stat-number text-2xl  md:text-3xl  font-bold text-cyan-400" data-value="8">
                 0+
               </h3>
-              <p className="mt-1 text-sm text-slate-400">Technologies</p>
+              <p className="mt-1 text-xs md:text-sm text-slate-400">Technologies</p>
             </div>
 
             <div>
-              <h3 className="stat-number text-3xl font-bold text-cyan-400" data-value="1">
+              <h3 className="stat-number text-2xl  md:text-3xl  font-bold text-cyan-400" data-value="1">
                 0+
               </h3>
-              <p className="mt-1 text-sm text-slate-400">
+              <p className="mt-1 text-xs md:text-sm text-slate-400">
                 Years Learning & Building
               </p>
             </div>
@@ -152,7 +152,7 @@ export default function Hero() {
         </div>
 
         <div className="hero-avatar order-1 flex justify-center lg:order-2 lg:justify-end" style={{ opacity: 0, visibility: "hidden", transform: "translate3d(0, 56px, 0)" }}>
-          <div className="relative h-80 w-[320px] overflow-hidden rounded-4xl border border-cyan-400/30 bg-slate-900/60 shadow-2xl shadow-cyan-500/20 md:h-105 md:w-105">
+          <div className="relative h-80 w-[320px] overflow-hidden  rounded-full border border-cyan-400/30 bg-slate-900/60 shadow-2xl shadow-cyan-500/20 md:h-105 md:w-105">
             <Image
               src={PraiseAvatar}
               alt="Avatar illustration of Praise Innocent"

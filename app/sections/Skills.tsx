@@ -98,7 +98,7 @@ export default function Skills() {
             My Stack
           </p>
 
-          <h2 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
+          <h2 className="text-2xl font-bold leading-tight sm:text-4xl md:text-5xl">
             Technologies I use to build modern digital experiences.
           </h2>
 

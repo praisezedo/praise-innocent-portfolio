@@ -27,3 +27,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+@utility button-strucuture {
+   @apply p-2 rounded-lg  md:rounded-full  text-xs md:text-lg  md:px-6 md:py-3 font-bold;
+}
