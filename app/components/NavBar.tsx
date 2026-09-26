@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const links = ["About", "Skills", "Projects", "Vision", "Contact"];
+const links = ["About", "Education", "Skills", "Projects", "Vision", "Contact"];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
