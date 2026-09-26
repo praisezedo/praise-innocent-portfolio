@@ -1,36 +1,35 @@
 "use client";
 
-import {Canvas} from "@react-three/fiber";
-import {Float ,  Stars} from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Float } from "@react-three/drei";
 
-function FloatingSphere() {
-    return (
-        <Float speed={2} rotationIntensity={1.2} floatIntensity={1.5}>
-            <mesh>
-                <icosahedronGeometry args={[1.4 , 1]}/>
-                    <meshStandardMaterial
-                    color="#22d3ee"
-                    wireframe
-                    emissive="#0891b2"
-                    emissiveIntensity={0.4}
-                    />
-            </mesh>
-        </Float>
-    )
-} 
-
+function FloatingWireframeSphere() {
+  return (
+    <Float speed={1.3} rotationIntensity={0.8} floatIntensity={1.2}>
+      <mesh>
+        <icosahedronGeometry args={[1.7, 1]} />
+        <meshStandardMaterial
+          color="#67e8f9"
+          wireframe
+          emissive="#22d3ee"
+          emissiveIntensity={0.35}
+        />
+      </mesh>
+    </Float>
+  );
+}
 
 export default function HeroScene() {
-    return (
-        <Canvas
-            camera={{position: [0,0,5], fov: 45}}
-            dpr={[1, 1.5]}
-            performance={{ min: 0.5 }}
-        >
-             <ambientLight intensity={0.6}/>
-             <pointLight position={[4,4,4]} intensity={1.5}/>
-             <Stars radius={80} depth={40} count={700} factor={4} fade speed={0.4}/>
-             <FloatingSphere/>
-        </Canvas>
-    )
+  return (
+    <Canvas
+      camera={{ position: [0, 0, 5], fov: 45 }}
+      dpr={[1, 1.4]}
+      gl={{ antialias: true }}
+      performance={{ min: 0.5 }}
+    >
+      <ambientLight intensity={0.8} />
+      <pointLight position={[3, 3, 4]} intensity={1.2} color="#67e8f9" />
+      <FloatingWireframeSphere />
+    </Canvas>
+  );
 }

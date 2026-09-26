@@ -1,89 +1,11 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StarsBackground from "../components/StarsBackground";
 import { skills } from "../constants/skills";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Skills() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const targetLevels = useMemo(() => skills.map((skill) => skill.level), []);
-  const [confidenceLevels, setConfidenceLevels] = useState(() =>
-    skills.map(() => 0)
-  );
-
-  useGSAP(() => {
-    const section = sectionRef.current;
-
-    if (!section) {
-      return;
-    }
-
-    const cards = Array.from(
-      section.querySelectorAll<HTMLElement>(".skill-card")
-    );
-
-    const mm = gsap.matchMedia();
-
-    mm.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set(cards, { autoAlpha: 1, y: 0 });
-      setConfidenceLevels(targetLevels);
-    });
-
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const confidenceProgress = { value: 0 };
-      const confidenceTween = gsap.fromTo(
-        confidenceProgress,
-        { value: 0 },
-        {
-          value: 1,
-          duration: 0.9,
-          ease: "power3.out",
-          paused: true,
-          onUpdate: () => {
-            setConfidenceLevels(
-              targetLevels.map((level) => Math.round(level * confidenceProgress.value))
-            );
-          },
-          onComplete: () => {
-            setConfidenceLevels(targetLevels);
-          },
-        }
-      );
-
-      gsap.set(cards, { autoAlpha: 0, y: 56 });
-
-      const reveal = gsap.to(cards, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.85,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 78%",
-          toggleActions: "play none none none",
-          once: true,
-          onEnter: () => confidenceTween.play(0),
-        },
-      });
-
-      return () => {
-        confidenceTween.kill();
-        reveal.kill();
-      };
-    });
-
-    return () => mm.revert();
-  }, { scope: sectionRef, dependencies: [targetLevels] });
-
   return (
     <section
-      ref={sectionRef}
       id="skills"
       className="relative overflow-hidden px-6 py-28 md:px-16 lg:px-24"
     >
@@ -109,14 +31,13 @@ export default function Skills() {
         </div>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {skills.map((skill, index) => {
+          {skills.map((skill) => {
             const Icon = skill.icon;
-            const confidenceLevel = confidenceLevels[index] ?? 0;
 
             return (
               <article
                 key={skill.name}
-                className="skill-card flex h-full flex-col rounded-4xl border border-white/10 bg-white/3 p-6 opacity-100 backdrop-blur-md transition hover:-translate-y-1 hover:border-cyan-400/40 hover:bg-cyan-400/5"
+                className="skill-card flex h-full flex-col rounded-4xl border border-white/10 bg-white/3 p-6 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:bg-cyan-400/5"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
@@ -145,14 +66,14 @@ export default function Skills() {
                     </span>
 
                     <span className="text-cyan-400">
-                      {confidenceLevel}%
+                      {skill.level}%
                     </span>
                   </div>
 
                   <div className="h-2 overflow-hidden rounded-full bg-slate-800">
                     <div
-                      className="h-full rounded-full bg-cyan-400"
-                      style={{ width: `${confidenceLevel}%` }}
+                      className="h-full rounded-full bg-cyan-400 transition-all duration-500"
+                      style={{ width: `${skill.level}%` }}
                     />
                   </div>
                 </div>

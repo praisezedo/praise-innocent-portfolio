@@ -19,7 +19,7 @@ export default function Navbar() {
     "absolute left-1/2 h-0.5 w-7 -translate-x-1/2 rounded-full bg-white transition-all duration-300 ease-out";
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#050816]/80 backdrop-blur-md">
+    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#050816]/80 backdrop-blur-sm">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-12">
         <a href="#" className="text-xl font-bold tracking-wide text-white">
           Praise Innocent.
@@ -57,7 +57,7 @@ export default function Navbar() {
       </nav>
 
       <div
-        className={`fixed inset-0 z-40 bg-slate-900/70 backdrop-blur-xl transition-all duration-300 ease-out md:hidden ${
+        className={`fixed inset-0 z-40 bg-slate-900/70 backdrop-blur-md transition-all duration-300 ease-out md:hidden ${
           open
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -76,7 +76,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          <div className="flex bg-slate-900/90 backdrop-blur-lg flex-1 flex-col items-center justify-center gap-4 pb-16">
+          <div className="flex bg-slate-900/90 backdrop-blur-sm flex-1 flex-col items-center justify-center gap-4 pb-16">
             {links.map((link, index) => (
               <a
                 key={link}

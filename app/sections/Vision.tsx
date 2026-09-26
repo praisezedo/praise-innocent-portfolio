@@ -1,61 +1,10 @@
 "use client";
 
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
-
 import StarsBackground from "../components/StarsBackground";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Vision() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-
-    mm.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set(".vision-content, .vision-card", { autoAlpha: 1, y: 0 });
-    });
-
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.set(".vision-content, .vision-card", { autoAlpha: 0, y: 56 });
-
-      gsap.to(".vision-content", {
-        autoAlpha: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: "#vision",
-          start: "top 78%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      });
-
-      gsap.to(".vision-card", {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".vision-grid",
-          start: "top 82%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      });
-    });
-
-    return () => mm.revert();
-  }, { scope: sectionRef });
-
   return (
     <section
-      ref={sectionRef}
       id="vision"
       className="relative overflow-hidden px-6 py-28 md:px-16 lg:px-24"
     >
@@ -65,7 +14,7 @@ export default function Vision() {
 
       <div className="absolute left-1/2 top-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[140px]" />
 
-      <div className="vision-content relative z-10 mx-auto max-w-5xl text-center">
+      <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="mb-4 text-sm uppercase tracking-[0.3em] text-cyan-400">
           Vision
         </p>
@@ -92,8 +41,8 @@ export default function Vision() {
         </p>
       </div>
 
-      <div className="vision-grid relative z-10 mx-auto mt-20 grid sm:grid-cols-2 max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
+      <div className="relative z-10 mx-auto mt-20 grid max-w-7xl gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+        <div className="rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-cyan-400/40">
           <h3 className="text-xl md:text-2xl font-bold text-white">
             Human-Centered Software
           </h3>
@@ -104,7 +53,7 @@ export default function Vision() {
           </p>
         </div>
 
-        <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
+        <div className="rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-cyan-400/40">
           <h3 className="text-xl md:text-2xl font-bold text-white">
             Intelligent Interfaces
           </h3>
@@ -115,7 +64,7 @@ export default function Vision() {
           </p>
         </div>
 
-        <div className="vision-card rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md">
+        <div className="rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-cyan-400/40">
           <h3 className="text-xl md:text-2xl font-bold text-white">
             Immersive Web Experiences
           </h3>

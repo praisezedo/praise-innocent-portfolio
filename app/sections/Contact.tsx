@@ -1,10 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
-
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
 
 import {
   FaGithub,
@@ -13,10 +9,7 @@ import {
   FaWhatsapp,
 } from "react-icons/fa6";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Contact() {
-  const sectionRef = useRef<HTMLElement>(null);
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
@@ -29,33 +22,6 @@ export default function Contact() {
   const [status, setStatus] = useState("");
   const [textColor, setTextColor] = useState("text-green-600" as TextColor);
 
-  useGSAP(() => {
-    const mm = gsap.matchMedia();
-
-    mm.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set(".contact-card", { autoAlpha: 1, y: 0 });
-    });
-
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.set(".contact-card", { autoAlpha: 0, y: 56 });
-
-      gsap.to(".contact-card", {
-        autoAlpha: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: "#contact",
-          start: "top 78%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      });
-    });
-
-    return () => mm.revert();
-  }, { scope: sectionRef });
-
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -63,16 +29,13 @@ export default function Contact() {
 
     try {
       setLoading(true);
-
       setStatus("");
 
       const response = await fetch("/api/contact", {
         method: "POST",
-
         headers: {
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify(form),
       });
 
@@ -81,6 +44,7 @@ export default function Contact() {
       if (!response.ok) {
         throw new Error(data.message);
       }
+
       setTextColor("text-green-600" as TextColor);
       setStatus("Message sent successfully.");
       setForm({
@@ -98,20 +62,19 @@ export default function Contact() {
 
   return (
     <section
-      ref={sectionRef}
       id="contact"
       className="relative overflow-hidden px-6 py-28 md:px-16 lg:px-24"
     >
       <div className="absolute right-0 top-20 h-75 w-75 rounded-full bg-cyan-500/10 blur-[120px]" />
 
-      <div className="contact-card relative z-10 mx-auto max-w-6xl rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md md:p-12">
+      <div className="relative z-10 mx-auto max-w-6xl rounded-4xl border border-white/10 bg-white/3 p-8 backdrop-blur-md md:p-12">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-cyan-400">
               Contact
             </p>
 
-            <h2 className=" text-xl font-bold sm:text-4xl md:text-5xl" suppressHydrationWarning={true}>
+            <h2 className="text-xl font-bold sm:text-4xl md:text-5xl" suppressHydrationWarning={true}>
               Let&apos;s build something meaningful together.
             </h2>
 
@@ -161,18 +124,13 @@ export default function Contact() {
             </div>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-          >
+          <form onSubmit={handleSubmit} className="space-y-6">
             <input
               type="text"
               placeholder="Your Name"
               required
               value={form.name}
-              onChange={(e) =>
-                setForm({ ...form, name: e.target.value })
-              }
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 outline-none transition focus:border-cyan-400"
             />
 
@@ -181,9 +139,7 @@ export default function Contact() {
               placeholder="Your Email"
               required
               value={form.email}
-              onChange={(e) =>
-                setForm({ ...form, email: e.target.value })
-              }
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 outline-none transition focus:border-cyan-400"
             />
 
@@ -192,9 +148,7 @@ export default function Contact() {
               required
               rows={6}
               value={form.message}
-              onChange={(e) =>
-                setForm({ ...form, message: e.target.value })
-              }
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 outline-none transition focus:border-cyan-400"
             />
 
@@ -206,11 +160,7 @@ export default function Contact() {
               {loading ? "Sending..." : "Send Message"}
             </button>
 
-            {status && (
-              <p className={`text-sm ${textColor}`}>
-                {status}
-              </p>
-            )}
+            {status && <p className={`text-sm ${textColor}`}>{status}</p>}
           </form>
         </div>
       </div>

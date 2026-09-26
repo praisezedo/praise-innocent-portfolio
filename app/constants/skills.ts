@@ -41,7 +41,7 @@ export const skills = [
 
   {
     name: "TypeScript",
-    level:  70,
+    level:  75,
     group: "Foundation",
     icon: SiTypescript,
     docs: "https://www.typescriptlang.org/docs/",
@@ -51,7 +51,7 @@ export const skills = [
 
   {
     name: "React",
-    level: 70,
+    level: 80,
     group: "Frontend",
     icon: FaReact,
     docs: "https://react.dev/",
