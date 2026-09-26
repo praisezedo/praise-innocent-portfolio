@@ -12,7 +12,7 @@ export default function Education() {
           Education
         </p>
 
-        <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl md:text-5xl">
+        <h2 className="text-xl font-bold leading-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
           Academic foundation and growth
         </h2>
 
@@ -22,17 +22,17 @@ export default function Education() {
               <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-300 sm:text-xs">
                 Institution
               </p>
-              <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl md:text-3xl">
+              <h3 className="mt-3 text-xl font-semibold text-white sm:text-2xl lg:text-3xl">
                 Federal University of Technology, Owerri (FUTO)
               </h3>
             </div>
 
-            <span className="inline-flex w-fit items-center rounded-full border border-cyan-400/40 bg-cyan-400/10 px-3 py-2 text-xs font-medium text-cyan-200 sm:text-sm">
+            <span className="inline-flex w-fit items-center rounded-full border border-cyan-400/40 bg-cyan-400/10 px-3 py-2 text-xs font-medium text-cyan-200 lg:text-sm">
               300 Level
             </span>
           </div>
 
-          <div className="mt-8 grid gap-6 md:mt-8 md:grid-cols-[1.1fr_0.9fr] md:gap-8">
+          <div className="mt-8 grid gap-6 md:mt-8 lg:grid-cols-[1.1fr_0.9fr] md:gap-8">
             <div>
               <p className="text-[10px] uppercase tracking-[0.25em] text-slate-400 sm:text-xs">
                 Degree

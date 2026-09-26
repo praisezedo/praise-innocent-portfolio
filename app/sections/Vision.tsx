@@ -70,7 +70,7 @@ export default function Vision() {
           Vision
         </p>
 
-        <h2 className="text-2xl font-bold leading-tight sm:text-2xl md:text-6xl">
+        <h2 className="text-2xl font-bold leading-tight sm:text-2xl md:text-4xl lg:text-6xl">
           I believe the future of software will feel more intelligent, immersive,
           and human-centered.
         </h2>
